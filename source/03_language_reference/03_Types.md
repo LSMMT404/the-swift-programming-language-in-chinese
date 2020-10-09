@@ -80,7 +80,7 @@ var someValue: ExampleModule.MyType
 > 
 
 #### type-identifier {#type-identifier}
-> *类型标识符* → [类型名称](#type-name) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> | [类型名称](#type-name) [泛型实参子句](./09-Generic-Parameters-and-Arguments.md#generic-argument-clause)<sub>可选</sub> **.** [类型标识符](#type-identifier)
+> *类型标识符* → [类型名称](#type-name) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub> | [类型名称](#type-name) [泛型实参子句](./09_Generic_Parameters_and_Arguments.md#generic-argument-clause)<sub>可选</sub> **.** [类型标识符](#type-identifier)
 
 #### type-name {#type-name}
 > *类型名称* → [标识符](./02_Lexical_Structure.md#identifier)
@@ -164,7 +164,7 @@ var operation: (Int, Int) -> Int                // 正确
 
 如果一个函数类型包涵多个箭头（->），那么函数类型将从右向左进行组合。例如，函数类型 `(Int) -> (Int) -> Int` 可以理解为 `(Int) -> ((Int) -> Int)`，也就是说，该函数传入 `Int`，并返回另一个传入并返回 `Int` 的函数。
 
-函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06-Declarations.md#rethrowing-functions-and-methods)。
+函数类型若要抛出或重抛错误就必须使用 `throws` 关键字来标记。`throws` 关键字是函数类型的一部分，非抛出函数是抛出函数的子类型。因此，在使用抛出函数的地方也可以使用不抛出函数。抛出和重抛函数的相关描述见章节 [抛出函数与方法](./06_Declarations.md#throwing-functions-and-methods) 和 [重抛函数与方法](./06_Declarations.md#rethrowing-functions-and-methods)。
 
 ### 对非逃逸闭包的限制 {#Restrictions for Nonescaping Closures}
 当非逃逸闭包函数是形参时，不能存储在属性、变量或任何 `Any` 类型的常量中，因为这可能导致值的逃逸。  
@@ -202,7 +202,7 @@ func takesTwoFunctions(first: (Any) -> Void, second: (Any) -> Void) {
 > *函数类型子句* → **(** [函数类型实参列表](#function-type-argument-list) *...*­ <sub>可选</sub> **)**  
 
 #### function-type-argument-list {#function-type-argument-list}
-> *函数类型实参列表* → [函数类型实参](function-type-argument) | [函数类型实参](function-type-argument)， [函数类型实参列表](#function-type-argument-list)
+> *函数类型实参列表* → [函数类型实参](#function-type-argument) | [函数类型实参](#function-type-argument)， [函数类型实参列表](#function-type-argument-list)
 
 #### function-type-argument {#function-type-argument}
 
@@ -345,7 +345,7 @@ let implicitlyUnwrappedArray: [Int]!                  // 正确
 
 > `Protocol 1` & `Procotol 2`
 
-协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 来取代申明一个新的协议作为 `SuperClass` 的子类并遵循 `ProtocolA`。
+协议合成类型允许你指定一个值，其类型遵循多个协议的要求而不需要定义一个新的命名型协议来继承它想要符合的各个协议。比如，协议合成类型 `Protocol A & Protocol B & Protocol C` 等效于一个从 `Protocol A`，`Protocol B`，`Protocol C` 继承而来的新协议。同样的，你可以使用 `SuperClass & ProtocolA` 来取代声明一个新的协议作为 `SuperClass` 的子类并遵循 `ProtocolA`。
 
 协议合成列表中的每一项都必须是下面所列情况之一，列表中最多只能包含一个类：  
 
@@ -450,7 +450,14 @@ let anotherInstance = metatype.init(string: "some string")
 
 在协议声明或者协议成员声明时，`Self` 类型引用的是最终遵循该协议的类型。
 
-在结构体，类或者枚举值声明时，`Self` 类型引用的是声明的类型。在某个类型成员声明时，`Self` 类型引用的是该类型。在类成员声明时，`Self` 可以在方法的返回值和方法体中使用，但不能在其他上下文中使用。举个例子，下面的代码演示了返回值是 `Self` 的实例方法 `f` 。
+在结构体，类或者枚举值声明时，Self 类型引用的是声明的类型。在某个类型成员声明时，Self 类型引用的是该类型。在类成员声明时，`Self` 只能在以下几种情况中出现：
+
+* 作为方法的返回类型
+* 作为只读下标的返回类型
+* 作为只读计算属性的类型
+* 在方法体中
+
+举个例子，下面的代码演示了返回值是 `Self` 的实例方法 `f` 。
 
 ```swift
 class Superclass {

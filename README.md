@@ -7,10 +7,11 @@
 
 # 在线阅读
 
-使用 GitBook 制作，可以直接 [在线阅读](https://swiftgg.gitbook.io/swift/)。
+使用 GitBook 制作，可以在 [GitBook](https://swiftgg.gitbook.io/swift/) 网站阅读。
 
 # 当前阶段
 
+- 更新到 Swift 5.2，2020-02-15
 - 更新到 Swift 5.1，2019-11-11
 - 更新到 Swift 5.0，2019-04-05
 - 更新到 Swift 4.2，2019-01-29
